@@ -373,6 +373,9 @@ static int charge_extrem_low_power(struct udevice *dev)
 			/* PMIC shutdown */
 			pmic_shutdown(pmic);
 
+			/* Give the PMIC a chance to finish shutting down */
+			mdelay(5);
+
 			printf("Cpu should never reach here, shutdown failed !\n");
 		}
 	}
@@ -391,6 +394,9 @@ static int charge_extrem_low_power(struct udevice *dev)
 			mdelay(5);
 			/* PMIC shutdown */
 			pmic_shutdown(pmic);
+
+			/* Give the PMIC a chance to finish shutting down */
+            mdelay(5);
 
 			printf("Cpu should never reach here, shutdown failed !\n");
 			continue;
@@ -580,6 +586,9 @@ static int charge_animation_show(struct udevice *dev)
 
 			/* PMIC shutdown */
 			pmic_shutdown(pmic);
+
+			/* Give the PMIC a chance to finish shutting down */
+            mdelay(5);
 
 			printf("Cpu should never reach here, shutdown failed !\n");
 			continue;

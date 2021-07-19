@@ -33,6 +33,7 @@
 #include <dm/uclass-internal.h>
 #include <dm/root.h>
 #include <power/charge_display.h>
+#include <power/pmic.h>
 #include <power/regulator.h>
 #include <optee_include/OpteeClientInterface.h>
 #include <optee_include/OpteeClientApiLib.h>
@@ -294,6 +295,20 @@ int board_late_init(void)
 {
 	rockchip_set_ethaddr();
 	rockchip_set_serialno();
+
+#ifdef CONFIG_RK8XX_PWRKEY
+    /* Modified by REV Robotics: Configure PMIC_PWRON_KEY register (0x00f7) of RK809 PMIC
+
+       PWRON_ON_TIME        0 (power button must be held down 500ms before the device turns on)
+       PWRON_DB_SEL         3 (40ms debounce time for power button)
+       All other bits are set to their default values */
+	struct udevice *p;
+    int getResult = pmic_get("pmic@20", &p);
+    if (getResult == 0) {
+        pmic_reg_write(p, 0x00f7, 0x07);
+    }
+#endif /* CONFIG_RK8XX_PWRKEY */
+
 	setup_download_mode();
 #if (CONFIG_ROCKCHIP_BOOT_MODE_REG > 0)
 	setup_boot_mode();
