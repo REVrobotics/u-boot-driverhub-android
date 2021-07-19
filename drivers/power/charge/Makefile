@@ -1,0 +1,8 @@
+#
+# Copyright (c) 2019 Fuzhou Rockchip Electronics Co., Ltd
+#
+# SPDX-License-Identifier:     GPL-2.0+
+#
+
+obj-$(CONFIG_CHARGER_BQ25700) += bq25700_charger.o
+obj-$(CONFIG_CHARGER_IP3215) += ip2315_charger.o
